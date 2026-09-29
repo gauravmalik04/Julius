@@ -1,0 +1,317 @@
+[
+  {
+    "type": "manager",
+    "id": "COACH-0",
+    "name": "Michael Carrick",
+    "date_of_birth": "1981-07-28",
+    "nationality": "England",
+    "contract": {
+      "start": "2026-01-15",
+      "until": null
+    }
+  },
+  {
+    "type": "squad",
+    "id": "PLY-7913",
+    "name": "Karl Darlow",
+    "position": "Goalkeeper",
+    "date_of_birth": "1990-10-08",
+    "nationality": "Wales"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-8035",
+    "name": "Tom Heaton",
+    "position": "Goalkeeper",
+    "date_of_birth": "1986-04-15",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-29518",
+    "name": "Altay Bay\u0131nd\u0131r",
+    "position": "Goalkeeper",
+    "date_of_birth": "1998-04-14",
+    "nationality": "Turkey"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-129946",
+    "name": "Senne Lammens",
+    "position": "Goalkeeper",
+    "date_of_birth": "2002-07-07",
+    "nationality": "Belgium"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-188435",
+    "name": "Radek Vitek",
+    "position": "Goalkeeper",
+    "date_of_birth": "2003-10-24",
+    "nationality": "Czech Republic"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-210730",
+    "name": "Dermot Mee",
+    "position": "Goalkeeper",
+    "date_of_birth": "2002-11-20",
+    "nationality": "Northern Ireland"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-3326",
+    "name": "Harry Maguire",
+    "position": "Defence",
+    "date_of_birth": "1993-03-05",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-7549",
+    "name": "Matthijs de Ligt",
+    "position": "Defence",
+    "date_of_birth": "1999-08-12",
+    "nationality": "Netherlands"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-7553",
+    "name": "Noussair Mazraoui",
+    "position": "Defence",
+    "date_of_birth": "1997-11-14",
+    "nationality": "Morocco"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-7898",
+    "name": "Luke Shaw",
+    "position": "Defence",
+    "date_of_birth": "1995-07-12",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-15905",
+    "name": "Diogo Dalot",
+    "position": "Defence",
+    "date_of_birth": "1999-03-18",
+    "nationality": "Portugal"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-46451",
+    "name": "Lisandro Mart\u00ednez",
+    "position": "Defence",
+    "date_of_birth": "1998-01-18",
+    "nationality": "Argentina"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-181933",
+    "name": "Leny Yoro",
+    "position": "Defence",
+    "date_of_birth": "2005-11-13",
+    "nationality": "France"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-188291",
+    "name": "Tyler Fredricson",
+    "position": "Defence",
+    "date_of_birth": "2005-02-23",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-210150",
+    "name": "Harry Amass",
+    "position": "Defence",
+    "date_of_birth": "2007-03-16",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-211559",
+    "name": "Patrick Dorgu",
+    "position": "Defence",
+    "date_of_birth": "2004-10-26",
+    "nationality": "Denmark"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-247644",
+    "name": "Ayden Heaven",
+    "position": "Defence",
+    "date_of_birth": "2006-09-22",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-262921",
+    "name": "Diego Le\u00f3n",
+    "position": "Defence",
+    "date_of_birth": "2007-04-03",
+    "nationality": "Paraguay"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-3257",
+    "name": "Bruno Fernandes",
+    "position": "Midfield",
+    "date_of_birth": "1994-09-08",
+    "nationality": "Portugal"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-3658",
+    "name": "Youri Tielemans",
+    "position": "Midfield",
+    "date_of_birth": "1997-05-07",
+    "nationality": "Belgium"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-7599",
+    "name": "Mason Mount",
+    "position": "Midfield",
+    "date_of_birth": "1999-01-10",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-28549",
+    "name": "Manuel Ugarte",
+    "position": "Midfield",
+    "date_of_birth": "2001-04-11",
+    "nationality": "Uruguay"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-166366",
+    "name": "Andrey Santos",
+    "position": "Midfield",
+    "date_of_birth": "2004-05-03",
+    "nationality": "Brazil"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-190797",
+    "name": "Kobbie Mainoo",
+    "position": "Midfield",
+    "date_of_birth": "2005-04-19",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-217491",
+    "name": "Daniel Gore",
+    "position": "Midfield",
+    "date_of_birth": "2004-09-26",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-248734",
+    "name": "Toby Collyer",
+    "position": "Midfield",
+    "date_of_birth": "2004-01-03",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-271941",
+    "name": "Jack Fletcher",
+    "position": "Midfield",
+    "date_of_birth": "2007-03-19",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-290139",
+    "name": "Tyler Fletcher",
+    "position": "Midfield",
+    "date_of_birth": "2007-03-19",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-292183",
+    "name": "Jacob Devaney",
+    "position": "Midfield",
+    "date_of_birth": "2007-06-11",
+    "nationality": "Ireland"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-3331",
+    "name": "Marcus Rashford",
+    "position": "Offence",
+    "date_of_birth": "1997-10-31",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-8626",
+    "name": "Bryan Mbeumo",
+    "position": "Offence",
+    "date_of_birth": "1999-08-07",
+    "nationality": "Cameroon"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-30842",
+    "name": "Matheus Cunha",
+    "position": "Offence",
+    "date_of_birth": "1999-05-27",
+    "nationality": "Brazil"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-99731",
+    "name": "Joshua Zirkzee",
+    "position": "Offence",
+    "date_of_birth": "2001-05-22",
+    "nationality": "Netherlands"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-124244",
+    "name": "Benjamin \u0160e\u0161ko",
+    "position": "Offence",
+    "date_of_birth": "2003-05-31",
+    "nationality": "Slovenia"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-133584",
+    "name": "Amad Diallo",
+    "position": "Offence",
+    "date_of_birth": "2002-07-11",
+    "nationality": "Ivory Coast"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-250421",
+    "name": "Ethan Wheatley",
+    "position": "Offence",
+    "date_of_birth": "2006-01-20",
+    "nationality": "England"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-275522",
+    "name": "Chido Obi-Martin",
+    "position": "Offence",
+    "date_of_birth": "2007-11-29",
+    "nationality": "Denmark"
+  },
+  {
+    "type": "squad",
+    "id": "PLY-289557",
+    "name": "Shea Lacey",
+    "position": "Offence",
+    "date_of_birth": "2007-04-14",
+    "nationality": "England"
+  }
+]

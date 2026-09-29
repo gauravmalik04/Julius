@@ -1,0 +1,20 @@
+fastapi
+uvicorn[standard]
+pydantic
+python-dotenv
+openai
+
+# Phase 1 — RAG & News Pipeline
+chromadb>=0.5
+tiktoken
+requests
+trafilatura
+langchain-openai
+langchain-community
+sentence-transformers
+apscheduler>=3.10
+google-api-python-client
+google-auth-httplib2
+google-auth-oauthlib
+langgraph
+langchain-core

@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description"
+    content="Manchester United Fan Companion — your AI-powered football companion. Fixtures, stats, recaps, and transfer news for the Red Devils." />
+  <title>Man Utd Companion — Football AI</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Marked.js -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    /* ── Design Tokens ─────────────────────────────── */
+    :root {
+      --primary-red: #E53238;
+      --primary-red-dark: #c22026;
+      --text-light: #F0F0F0;
+      --text-muted: #A0A0A0;
+      --glass-bg: rgba(255, 255, 255, 0.07);
+      --glass-border: rgba(255, 255, 255, 0.14);
+      --surface-solid: rgba(18, 18, 18, 0.88);
+      --green: #22c55e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      background-color: #0a0a0a;
+      background-image:
+        linear-gradient(rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0.75)),
+        url('/static/stadium.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-light);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Animated Orbs ─────────────────────────────── */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(229, 50, 56, 0.18) 0%, transparent 65%);
+      filter: blur(80px);
+      top: -250px;
+      left: -200px;
+      animation: float1 18s ease-in-out infinite;
+    }
+
+    body::after {
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(180, 20, 30, 0.12) 0%, transparent 65%);
+      filter: blur(80px);
+      bottom: -200px;
+      right: -150px;
+      animation: float2 22s ease-in-out infinite;
+    }
+
+    @keyframes float1 {
+
+      0%,
+      100% {
+        transform: translate(0, 0);
+      }
+
+      50% {
+        transform: translate(60px, 80px);
+      }
+    }
+
+    @keyframes float2 {
+
+      0%,
+      100% {
+        transform: translate(0, 0);
+      }
+
+      50% {
+        transform: translate(-60px, -60px);
+      }
+    }
+
+    /* ── Header ────────────────────────────────────── */
+    header {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 26px 40px;
+      position: relative;
+      z-index: 10;
+      flex-shrink: 0;
+    }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px rgba(229, 50, 56, 0.4));
+    }
+
+    .brand-text h1 {
+      color: var(--primary-red);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .brand-text p {
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.6px;
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    /* Live badge */
+    #team-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(229, 50, 56, 0.1);
+      border: 1px solid rgba(229, 50, 56, 0.25);
+      border-radius: 999px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.71rem;
+      font-weight: 700;
+      color: #f87171;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    #team-badge .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      flex-shrink: 0;
+    }
+
+    .clear-btn {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(229, 50, 56, 0.4);
+      color: var(--primary-red);
+      padding: 7px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(5px);
+      letter-spacing: 0.3px;
+    }
+
+    .clear-btn:hover {
+      background: var(--primary-red);
+      border-color: var(--primary-red);
+      color: white;
+      box-shadow: 0 4px 16px rgba(229, 50, 56, 0.35);
+    }
+
+    /* ── Main Glass Panel ──────────────────────────── */
+    .main-container {
+      width: 90%;
+      max-width: 900px;
+      flex: 1;
+      min-height: 0;
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      position: relative;
+      z-index: 5;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    /* ── Chat sub-header ───────────────────────────── */
+    .chat-subheader {
+      padding: 0.65rem 1.5rem;
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.77rem;
+      color: var(--text-muted);
+      background: rgba(0, 0, 0, 0.15);
+      flex-shrink: 0;
+    }
+
+    .chat-subheader strong {
+      color: var(--text-light);
+      font-size: 0.8rem;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      flex-shrink: 0;
+    }
+
+    /* ── Chat Log ──────────────────────────────────── */
+    #log {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      overflow-y: auto;
+      padding: 28px 36px;
+      scroll-behavior: smooth;
+    }
+
+    #log::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    #log::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #log::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+    }
+
+    #log::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ── Empty state ───────────────────────────────── */
+    .empty {
+      margin: auto;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 360px;
+      line-height: 1.65;
+    }
+
+    .empty .icon {
+      font-size: 2.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .empty strong {
+      display: block;
+      color: var(--text-light);
+      font-size: 1.05rem;
+      margin-bottom: 0.45rem;
+      font-weight: 700;
+    }
+
+    .empty .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      justify-content: center;
+      margin-top: 0.9rem;
+    }
+
+    .chip {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      padding: 0.28rem 0.75rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 160ms;
+    }
+
+    .chip:hover {
+      background: rgba(229, 50, 56, 0.12);
+      border-color: rgba(229, 50, 56, 0.35);
+      color: #f87171;
+    }
+
+    /* ── Message Rows ──────────────────────────────── */
+    .row {
+      display: flex;
+      width: 100%;
+      animation: pop 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .row.user {
+      justify-content: flex-end;
+    }
+
+    .row.bot {
+      justify-content: flex-start;
+    }
+
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ── AI message layout ─────────────────────────── */
+    .ai-content {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .ai-avatar {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      object-fit: contain;
+      border-radius: 50%;
+    }
+
+    /* ── Chat Bubbles ──────────────────────────────── */
+    .bubble {
+      max-width: 75%;
+      padding: 14px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+      letter-spacing: 0.25px;
+      word-wrap: break-word;
+    }
+
+    /* User bubble — red tint */
+    .bubble.user {
+      background: rgba(229, 50, 56, 0.15);
+      border: 1px solid rgba(229, 50, 56, 0.3);
+      color: #ffffff;
+      border-bottom-right-radius: 5px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Bot bubble — glass white */
+    .bubble.bot {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #EAEAEA;
+      border-bottom-left-radius: 5px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    /* Markdown in bot bubble */
+    .bubble.bot p {
+      margin-bottom: 0.7rem;
+    }
+
+    .bubble.bot p:last-child {
+      margin-bottom: 0;
+    }
+
+    .bubble.bot ul,
+    .bubble.bot ol {
+      margin: 0.4rem 0 0.7rem 1.25rem;
+    }
+
+    .bubble.bot li {
+      margin-bottom: 0.25rem;
+    }
+
+    .bubble.bot h1,
+    .bubble.bot h2,
+    .bubble.bot h3 {
+      margin: 1.1rem 0 0.45rem;
+      color: #fff;
+      font-size: 1.05rem;
+    }
+
+    .bubble.bot h1:first-child,
+    .bubble.bot h2:first-child,
+    .bubble.bot h3:first-child {
+      margin-top: 0;
+    }
+
+    .bubble.bot a {
+      color: #f87171;
+      text-decoration: none;
+    }
+
+    .bubble.bot a:hover {
+      text-decoration: underline;
+    }
+
+    .bubble.bot strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    details {
+      margin-top: 0.55rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+      padding-top: 0.45rem;
+    }
+
+    details summary {
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.63rem;
+    }
+
+    details pre {
+      margin: 0.4rem 0 0;
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 0.71rem;
+      white-space: pre-wrap;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.5rem 0.65rem;
+      border-radius: 8px;
+    }
+
+    /* ── Thinking / Typing ─────────────────────────── */
+    .thinking-row-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .thinking-status-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #f87171;
+      font-size: 0.79rem;
+      font-weight: 600;
+    }
+
+    .thinking-spinner {
+      width: 13px;
+      height: 13px;
+      border: 2px solid rgba(248, 113, 113, 0.2);
+      border-top-color: #f87171;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .typing {
+      display: inline-flex;
+      gap: 4px;
+      padding: 0.3rem 0.1rem;
+    }
+
+    .typing span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      animation: blink 1.3s infinite ease-in-out;
+    }
+
+    .typing span:nth-child(2) {
+      animation-delay: 0.18s;
+    }
+
+    .typing span:nth-child(3) {
+      animation-delay: 0.36s;
+    }
+
+    @keyframes blink {
+
+      0%,
+      80%,
+      100% {
+        opacity: 0.2;
+        transform: translateY(0);
+      }
+
+      40% {
+        opacity: 1;
+        transform: translateY(-3px);
+      }
+    }
+
+    /* ── Composer / Input ──────────────────────────── */
+    .composer {
+      border-top: 1px solid var(--glass-border);
+      background: rgba(0, 0, 0, 0.25);
+      padding: 18px 24px 22px 24px;
+      flex-shrink: 0;
+    }
+
+    form {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      background: rgba(20, 20, 20, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 40px;
+      padding: 8px 8px 8px 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: border-color 160ms, box-shadow 160ms;
+    }
+
+    form:focus-within {
+      border-color: rgba(229, 50, 56, 0.45);
+      box-shadow: 0 0 0 3px rgba(229, 50, 56, 0.1), 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    #input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font: inherit;
+      font-size: 13.5px;
+      padding: 0.5rem 0;
+      background: transparent;
+      color: white;
+      letter-spacing: 0.4px;
+    }
+
+    #input::placeholder {
+      color: var(--text-muted);
+    }
+
+    button[type="submit"] {
+      background: var(--primary-red);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.2s, transform 120ms ease, box-shadow 120ms;
+      box-shadow: 0 6px 18px -6px rgba(229, 50, 56, 0.6);
+      flex-shrink: 0;
+    }
+
+    button[type="submit"]:hover {
+      background: var(--primary-red-dark);
+      transform: translateY(-1px) scale(1.05);
+    }
+
+    button[type="submit"]:active {
+      transform: scale(0.95);
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ── Footer hint ───────────────────────────────── */
+    .hint {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.35);
+      text-align: center;
+      letter-spacing: 0.03em;
+      padding-bottom: 10px;
+      flex-shrink: 0;
+    }
+
+    /* ── Responsive ─────────────────────────────────── */
+    @media (max-width: 768px) {
+      header {
+        padding: 18px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .header-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .main-container {
+        width: 100%;
+        border-radius: 18px;
+      }
+
+      #log {
+        padding: 20px 18px;
+      }
+
+      .bubble {
+        max-width: 88%;
+        font-size: 0.89rem;
+      }
+
+      .composer {
+        padding: 14px 16px 18px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        overflow-y: auto;
+        height: auto;
+      }
+
+      .main-container {
+        flex: none;
+        min-height: 480px;
+      }
+
+      #log {
+        height: 52vh;
+        flex: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Header ─────────────────────────────────── -->
+  <header>
+    <div class="brand-container">
+      <img src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Man Utd Logo"
+        class="logo">
+      <div class="brand-text">
+        <h1>Man Utd Companion</h1>
+        <p>Your Red Devils AI</p>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <span id="team-badge">
+        <span class="dot"></span>
+        <span id="team-label">Manchester United</span>
+      </span>
+      <button class="clear-btn" type="button" onclick="clearHistory()">
+        <i class="fa-regular fa-trash-can"></i> Clear History
+      </button>
+    </div>
+  </header>
+
+  <!-- ── Main Glass Panel ───────────────────────── -->
+  <main class="main-container">
+
+    <!-- Chat log -->
+    <div id="log" role="log" aria-live="polite">
+      <div class="empty">
+        <div class="icon">🔴</div>
+        <strong>Manchester United. Your club. Your companion.</strong>
+        Ask me anything about the Red Devils — fixtures, results, transfers, or match recaps.
+        <div class="chips">
+          <span class="chip" onclick="prefill(this)">When's our next match?</span>
+          <span class="chip" onclick="prefill(this)">Set reminder for next Arsenal match</span>
+          <span class="chip" onclick="prefill(this)">Show my saved reminders</span>
+          <span class="chip" onclick="prefill(this)">Latest transfer news?</span>
+          <span class="chip" onclick="prefill(this)">How did we play last game?</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Composer / input bar -->
+    <div class="composer">
+      <form id="form">
+        <input id="input" placeholder="ASK ABOUT THE RED DEVILS…" autocomplete="off" />
+        <button type="submit" aria-label="Send">
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </form>
+    </div>
+
+  </main>
+
+  <!-- Footer hint -->
+  <div class="hint">Press Enter to send</div>
+
+  <script>
+    const log = document.getElementById("log");
+    const input = document.getElementById("input");
+    const form = document.getElementById("form");
+    const sendBtn = form.querySelector("button");
+    const teamLabel = document.getElementById("team-label");
+
+    function updateTeamDisplay() {
+      if (teamLabel) teamLabel.textContent = "Manchester United";
+    }
+
+    function clearEmpty() {
+      const e = log.querySelector(".empty");
+      if (e) e.remove();
+    }
+
+    function prefill(el) {
+      input.value = el.textContent;
+      input.focus();
+    }
+
+    const MUFC_CREST = "/static/devil.png";
+
+    function add(role, text) {
+      clearEmpty();
+      const row = document.createElement("div");
+      row.className = "row " + role;
+
+      if (role === "user") {
+        // User: simple red-tinted bubble
+        const bubble = document.createElement("div");
+        bubble.className = "bubble user";
+        bubble.textContent = text;
+        row.append(bubble);
+      } else {
+        // Bot: avatar + glass bubble with markdown
+        const wrapper = document.createElement("div");
+        wrapper.className = "ai-content";
+
+        const avatar = document.createElement("img");
+        avatar.src = MUFC_CREST;
+        avatar.alt = "Red Devil AI";
+        avatar.className = "ai-avatar";
+
+        const bubble = document.createElement("div");
+        bubble.className = "bubble bot";
+        bubble.innerHTML = marked.parse(text);
+        bubble.querySelectorAll("a").forEach(a => a.setAttribute("target", "_blank"));
+
+        wrapper.append(avatar, bubble);
+        row.append(wrapper);
+      }
+
+      log.appendChild(row);
+      log.scrollTop = log.scrollHeight;
+      return row;
+    }
+
+    function showTyping() {
+      clearEmpty();
+      const row = document.createElement("div");
+      row.className = "row bot";
+      row.innerHTML = `
+        <div class="ai-content">
+          <img src="${MUFC_CREST}" alt="Red Devil AI" class="ai-avatar">
+          <div class="bubble bot">
+            <div class="thinking-row-box">
+              <div class="thinking-status-bar">
+                <div class="thinking-spinner"></div>
+                <span>Thinking…</span>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      log.appendChild(row);
+      log.scrollTop = log.scrollHeight;
+      return row;
+    }
+
+    let sessionId = localStorage.getItem("mufc_session_id");
+    if (!sessionId) {
+      sessionId = "session_" + Math.random().toString(36).substring(2, 10);
+      localStorage.setItem("mufc_session_id", sessionId);
+    }
+
+    async function send(msg) {
+      add("user", msg);
+      sendBtn.disabled = true;
+      const typingRow = showTyping();
+      try {
+        const r = await fetch("/api/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ message: msg, session_id: sessionId }),
+        });
+        if (!r.ok) throw new Error(await r.text());
+        const data = await r.json();
+        typingRow.remove();
+        add("bot", data.reply);
+      } catch (e) {
+        typingRow.remove();
+        add("bot", "⚠️ Error: " + e.message);
+      } finally {
+        sendBtn.disabled = false;
+        input.focus();
+      }
+    }
+
+    async function clearHistory() {
+      if (!confirm("Clear your conversation history?")) return;
+      try {
+        await fetch(`/api/chat/history?session_id=${sessionId}`, { method: "DELETE" });
+        log.innerHTML = `<div class="empty"><div class="icon">🔴</div><strong>History Cleared</strong>Ask a new question to start a fresh conversation.</div>`;
+      } catch (e) {
+        alert("Failed to clear history: " + e.message);
+      }
+    }
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      const v = input.value.trim();
+      if (!v) return;
+      input.value = "";
+      send(v);
+    });
+
+    updateTeamDisplay();
+  </script>
+</body>
+
+</html>

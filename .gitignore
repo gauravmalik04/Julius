@@ -1,0 +1,86 @@
+# ==============================================================================
+# Environment & Secrets
+# ==============================================================================
+.env
+.env.*
+!.env.example
+# Google Calendar OAuth client secret
+credentials.json
+# Google Calendar OAuth access/refresh token
+token.json
+
+# ==============================================================================
+# Python & Bytecode
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# ==============================================================================
+# Virtual Environment
+# ==============================================================================
+.venv/
+
+# ==============================================================================
+# Vector Stores & Databases
+# ChromaDB persistent storage (news_store, recap_store)
+# ==============================================================================
+.chroma/
+*.db
+*.sqlite
+*.sqlite3
+
+# ==============================================================================
+# Runtime App State
+# (data/records.json, data/users.json are seed data — keep tracked)
+# ==============================================================================
+# User-created match reminders (written by reminders_handler.py)
+data/reminders.json
+# Per-session conversation history (written by memory_manager.py)
+data/chat_history.json
+# News ingest timestamp & stats (written by news_ingestor.py)
+data/ingest_log.json
+
+# ==============================================================================
+# Evaluation & Benchmark Outputs
+# ==============================================================================
+evals/eval_results.json
+evals/evaluation_round_results.json
+
+# ==============================================================================
+# Testing & Coverage
+# ==============================================================================
+.pytest_cache/
+.coverage
+.coverage.*
+
+# ==============================================================================
+# Logs
+# ==============================================================================
+*.log
+logs/
+
+# ==============================================================================
+# Editor & IDE
+# ==============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==============================================================================
+# Project-Specific Exclusions
+# ==============================================================================
+# Ad-hoc test & debug scripts, not part of the codebase
+scratch/
+# Internal planning doc, not for distribution
+implementation_plan.md
+
+# ==============================================================================
+# OS Files
+# ==============================================================================
+.DS_Store
+Thumbs.db
+desktop.ini
